@@ -1,17 +1,74 @@
 
-@app.route('/review')
-def review():
-    total_vehicles = len(entries)
-    total_converters = sum(e['Converters'] for e in entries)
-    total_aluminum = sum(e['Aluminum'] for e in entries)
-    total_steel = sum(e['Steel'] for e in entries)
-    total_refrigerant = sum(e['Refrigerant'] for e in entries)
+from flask import Flask, render_template, request
 
-    return render_template(
-        'review.html',
-        total_vehicles=total_vehicles,
-        total_converters=total_converters,
-        total_aluminum=total_aluminum,
-        total_steel=total_steel,
-        total_refrigerant=total_refrigerant
-    )
+import requests
+
+
+
+app = Flask(__name__)
+
+
+
+VIN_DECODER_API = "https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/{vin}?format=json"
+
+
+
+def decode_vin(vin):
+
+    try:
+
+        response = requests.get(VIN_DECODER_API.format(vin=vin))
+
+        data = response.json()
+
+        results = data.get("Results", [])
+
+
+
+        def get_value(name):
+
+            return next((item["Value"] for item in results if item["Variable"] == name), "")
+
+
+
+        return {
+
+            "year": get_value("Model Year"),
+
+            "make": get_value("Make"),
+
+            "model": get_value("Model"),
+
+            "engine": get_value("Displacement (L)"),
+
+            "drivetrain": get_value("Drive Type")
+
+        }
+
+    except Exception as e:
+
+        print(f"VIN decoding error: {e}")
+
+        return {}
+
+
+
+@app.route("/", methods=["GET", "POST"])
+
+def process():
+
+    decoded = {}
+
+    if request.method == "POST":
+
+        vin = request.form.get("vin", "")
+
+        decoded = decode_vin(vin)
+
+    return render_template("processing.html", decoded=decoded)
+
+
+
+@app.route("/review")
+
+def review():
