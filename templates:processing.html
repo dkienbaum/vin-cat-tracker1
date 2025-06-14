@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vehicle Processing Form</title>
+</head>
+<body>
+    <h1>Vehicle Processing Form</h1>
+    <form method="POST">
+        <label>VIN Number:</label><br>
+        <input type="text" name="vin"><br><br>
+
+        <label>Year:</label><br>
+        <input type="text" name="year" value="{{ decoded.year }}"><br><br>
+
+        <label>Make:</label><br>
+        <input type="text" name="make" value="{{ decoded.make }}"><br><br>
+
+        <label>Model:</label><br>
+        <input type="text" name="model" value="{{ decoded.model }}"><br><br>
+
+        <label>Engine Size:</label><br>
+        <input type="text" name="engine" value="{{ decoded.engine }}"><br><br>
+
+        <label>Drivetrain:</label><br>
+        <input type="text" name="drivetrain" value="{{ decoded.drivetrain }}"><br><br>
+
+        <label>Aluminum Rims:</label>
+        <input type="checkbox" name="aluminum_rims"><br>
+
+        <label>Steel Rims:</label>
+        <input type="checkbox" name="steel_rims"><br>
+
+        <label>Refrigerant Present:</label>
+        <input type="checkbox" name="refrigerant"><br>
+
+        <label>Converter Quantity:</label><br>
+        <input type="number" name="converter_quantity"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
