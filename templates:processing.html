@@ -1,16 +1,60 @@
-
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-    <title>Review Intake</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2022.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000}
+    span.s1 {font-kerning: none}
+  </style>
 </head>
 <body>
-    <h1>VIN Intake Summary</h1>
-    <p>Total Vehicles: {{ total_vehicles }}</p>
-    <p>Total Converters: {{ total_converters }}</p>
-    <p>Total Aluminum Rims: {{ total_aluminum }}</p>
-    <p>Total Steel Rims: {{ total_steel }}</p>
-    <p>Total Refrigerant (Yes): {{ total_refrigerant }}</p>
-    <a href="/">Back to Intake Form</a>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p2"><span class="s1">&lt;html&gt;</span></p>
+<p class="p2"><span class="s1">&lt;head&gt;</span></p>
+<p class="p2"><span class="s1">    &lt;title&gt;Vehicle Processing Form&lt;/title&gt;</span></p>
+<p class="p2"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p2"><span class="s1">&lt;body&gt;</span></p>
+<p class="p2"><span class="s1">    &lt;h1&gt;Vehicle Processing Form&lt;/h1&gt;</span></p>
+<p class="p2"><span class="s1">    &lt;form method="post" action="/"&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;label&gt;VIN Number:&lt;/label&gt;&lt;br&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="text" name="vin"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Year:&lt;/label&gt;&lt;br&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="text" name="year" value="{{ decoded.year }}"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Make:&lt;/label&gt;&lt;br&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="text" name="make" value="{{ decoded.make }}"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Model:&lt;/label&gt;&lt;br&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="text" name="model" value="{{ decoded.model }}"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Engine Size:&lt;/label&gt;&lt;br&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="text" name="engine" value="{{ decoded.engine }}"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Drivetrain:&lt;/label&gt;&lt;br&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="text" name="drivetrain" value="{{ decoded.drivetrain }}"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Aluminum Rims:&lt;/label&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="checkbox" name="aluminum_rims"&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Steel Rims:&lt;/label&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="checkbox" name="steel_rims"&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Refrigerant Present:&lt;/label&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="checkbox" name="refrigerant"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;label&gt;Converter Quantity:&lt;/label&gt;&lt;br&gt;</span></p>
+<p class="p2"><span class="s1">        &lt;input type="number" name="converter_quantity"&gt;&lt;br&gt;&lt;br&gt;</span></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1">        &lt;input type="submit" value="Submit"&gt;</span></p>
+<p class="p2"><span class="s1">    &lt;/form&gt;</span></p>
+<p class="p2"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p2"><span class="s1">&lt;/html&gt;</span></p>
 </body>
 </html>
