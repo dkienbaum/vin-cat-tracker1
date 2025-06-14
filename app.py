@@ -1,51 +1,79 @@
-from flask import Flask, render_template, request
-
+from flask import Flask, render_template, request, redirect
 import requests
-
-
+import json
+from datetime import datetime
 
 app = Flask(__name__)
 
+DATA_FILE = "data.json"
 
+def load_data():
+   try:
+       with open(DATA_FILE, "r") as f:
+           return json.load(f)
+   except:
+       return []
 
-VIN_DECODER_API = "https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/{}?format=json"
+def save_data(data):
+   with open(DATA_FILE, "w") as f:
+       json.dump(data, f, indent=4)
 
-
-
-@app.route('/', methods=['GET', 'POST'])
-
+@app.route("/", methods=["GET", "POST"])
 def index():
+   vin_data = {}
+   if request.method == "POST":
+       vin = request.form.get("vin")
+       aluminum = request.form.get("aluminum") == "on"
+       steel = request.form.get("steel") == "on"
+       refrigerant = request.form.get("refrigerant")
+       converter_qty = request.form.get("converter_qty")
+       date = datetime.now().strftime("%Y-%m-%d (%A)")
 
-    decoded = {}
+       # VIN decode
+       try:
+           response = requests.get(f"https://vpic.nhtsa.dot.gov/api/vehicles/decodevinvaluesextended/{vin}?format=json")
+           result = response.json()["Results"][0]
+           vin_data = {
+               "vin": vin,
+               "make": result.get("Make", ""),
+               "model": result.get("Model", ""),
+               "year": result.get("ModelYear", ""),
+               "engine": result.get("EngineModel", ""),
+               "drivetrain": result.get("DriveType", "")
+           }
+       except:
+           vin_data = {
+               "vin": vin,
+               "make": "", "model": "", "year": "",
+               "engine": "", "drivetrain": ""
+           }
 
-    if request.method == 'POST':
+       entry = {
+           "date": date,
+           "vin": vin_data["vin"],
+           "make": vin_data["make"],
+           "model": vin_data["model"],
+           "year": vin_data["year"],
+           "engine": vin_data["engine"],
+           "drivetrain": vin_data["drivetrain"],
+           "aluminum_rims": aluminum,
+           "steel_rims": steel,
+           "refrigerant": refrigerant,
+           "converter_qty": converter_qty
+       }
 
-        vin = request.form['vin']
+       data = load_data()
+       data.append(entry)
+       save_data(data)
 
-        response = requests.get(VIN_DECODER_API.format(vin))
+       return redirect("/review")
 
-        data = response.json()
+   return render_template("index.html")
 
-        for item in data['Results']:
+@app.route("/review")
+def review():
+   data = load_data()
+   return render_template("review.html", data=data)
 
-            if item['Variable'] == 'Make':
-
-                decoded['make'] = item['Value']
-
-            elif item['Variable'] == 'Model':
-
-                decoded['model'] = item['Value']
-
-            elif item['Variable'] == 'Model Year':
-
-                decoded['year'] = item['Value']
-
-            elif item['Variable'] == 'Engine Model':
-
-                decoded['engine'] = item['Value']
-
-            elif item['Variable'] == 'Drive Type':
-
-                decoded['drivetrain'] = item['Value']
-
-    return render_template('processing.html', decoded=decoded)
+if __name__ == "__main__":
+   app.run(debug=True)
