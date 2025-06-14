@@ -1,51 +1,17 @@
-from flask import Flask, render_template, request
 
+@app.route('/review')
+def review():
+    total_vehicles = len(entries)
+    total_converters = sum(e['Converters'] for e in entries)
+    total_aluminum = sum(e['Aluminum'] for e in entries)
+    total_steel = sum(e['Steel'] for e in entries)
+    total_refrigerant = sum(e['Refrigerant'] for e in entries)
 
-
-app = Flask(__name__)
-
-
-
-@app.route("/", methods=["GET", "POST"])
-
-def index():
-
-    decoded = {
-
-        "year": "",
-
-        "make": "",
-
-        "model": "",
-
-        "engine": "",
-
-        "drivetrain": ""
-
-    }
-
-
-
-    if request.method == "POST":
-
-        vin = request.form["vin"]
-
-
-
-        # TEMP FAKE DATA: Replace this later with real VIN decoder
-
-        if len(vin) >= 8:
-
-            decoded["year"] = "2012"
-
-            decoded["make"] = "Chevrolet"
-
-            decoded["model"] = "Impala"
-
-            decoded["engine"] = "3.6L V6"
-
-            decoded["drivetrain"] = "FWD"
-
-
-
-    return render_template("processing.html", decoded=decoded)
+    return render_template(
+        'review.html',
+        total_vehicles=total_vehicles,
+        total_converters=total_converters,
+        total_aluminum=total_aluminum,
+        total_steel=total_steel,
+        total_refrigerant=total_refrigerant
+    )
